@@ -344,7 +344,7 @@ allteria.world.prototype.create_world = function create_scene()
 {
     var letter;
 
-    var pos = new three.Vector3(-1050, 100, 0);
+    var pos = new three.Vector3(-940, 100, 0);
 
     this.add_letter("A", pos);
     this.add_letter("Á", pos);
@@ -465,25 +465,25 @@ allteria.world.prototype.create_world = function create_scene()
     var s;
 
     s = new allteria.text_line("ABCDÐEÉFGHIÍJKLMNOÓPQRSTUÚVXYÝZÞÆÖ");
-    s.translateX(-1050);
+    s.translateX(-940);
     s.translateY(line_pos);
     this.scene.add(s);
 
     s = new allteria.text_line("aábcdðeéfghiíjklmnoópqrstuúvxyýzþæö1234567890:,.?+-*/!'()@=<>")
     line_pos -= s.get_height();
-    s.translateX(-1050);
+    s.translateX(-940);
     s.translateY(line_pos);
     this.scene.add(s);
 
     s = new allteria.text_line("ninnnininin")
     line_pos -= s.get_height();
-    s.translateX(-1050);
+    s.translateX(-940);
     s.translateY(line_pos);
     this.scene.add(s);
 
     s = new allteria.text_line("This is a text line.")
     line_pos -= s.get_height();
-    s.translateX(-1050);
+    s.translateX(-940);
     s.translateY(line_pos);
     this.scene.add(s);
 
@@ -492,13 +492,13 @@ allteria.world.prototype.create_world = function create_scene()
     t += "This seems to be working correctly. ";
     var p;
     p = new allteria.paragraph(t, 100);
-    p.translateX(-1050);
+    p.translateX(-940);
     p.translateY(-200);
     this.scene.add(p);
 
-    s = new allteria.text_line("This text is editable. 0123456789", 4);
+    s = new allteria.text_line("This text is editable. 0123456789", 3);
     s.set_editable(true);
-    s.translateX(-900);
+    s.translateX(-940);
     s.translateY(250);
     this.scene.add(s);
 

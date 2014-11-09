@@ -1,4 +1,4 @@
-allteria-ui
+allteria
 ===========
 
-A Three.js based pure 3D UI
+A framework based on three.js, websockets and zodb.

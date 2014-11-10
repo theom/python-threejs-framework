@@ -18,7 +18,7 @@ allteria.world.prototype.start = function start()
     this.init_window_resize();
     this.init_picking();
     this.init_keyboard();
-    this.connect_to_server()
+    //this.connect_to_server()
     this.create_world();
     this.render();
 }
@@ -537,6 +537,31 @@ allteria.world.prototype.create_world = function create_scene()
     b.translateX(700);
     b.translateY(50);
     this.scene.add(b);
+
+    cb1 = new allteria.checkbox("Option 1");
+    cb1.set_scale(4);
+    cb1.on_checked = function(event)
+    {
+        console.log("Option 1 checked");
+    };
+    cb1.on_unchecked = function(event)
+    {
+        console.log("Option 1 un-checked");
+    }
+    this.scene.add(cb1);
+
+    cb2 = new allteria.checkbox("Longer label on this checkbox");
+    cb2.set_scale(4);
+    cb2.on_checked = function(event)
+    {
+        console.log("Longer label checked");
+    };
+    cb2.on_unchecked = function(event)
+    {
+        console.log("Longer label un-checked");
+    }
+    cb2.translateY(-30);
+    this.scene.add(cb2);
 }
 
 allteria.world.prototype.render = function render()

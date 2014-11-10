@@ -8,7 +8,7 @@ allteria.world = function world()
 
 allteria.world.prototype.start = function start()
 {
-    this.perspective = false;
+    this.perspective = true;
     this.fps = 20;
     this.ms_per_frame = 1000 / this.fps;
     this.create_renderer();
@@ -63,7 +63,7 @@ allteria.world.prototype.create_camera = function create_camera()
     {
         var near_plane = 0.1;
         this.camera = new three.PerspectiveCamera(view_angle, aspect_ratio, near_plane, far_plane);
-        this.camera.position.z = 10;
+        this.camera.position.z = 350;
     }
     else
     {
@@ -576,6 +576,7 @@ allteria.world.prototype.create_world = function create_scene()
         console.log("Editable label un-checked");
     }
     cb.translateY(-60);
+    cb.rotateY(Math.PI/3);
     cb.set_editable(true);
     this.scene.add(cb);
 }

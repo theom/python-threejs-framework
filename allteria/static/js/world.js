@@ -538,30 +538,46 @@ allteria.world.prototype.create_world = function create_scene()
     b.translateY(50);
     this.scene.add(b);
 
-    cb1 = new allteria.checkbox("Option 1");
-    cb1.set_scale(4);
-    cb1.on_checked = function(event)
+    cb = new allteria.checkbox("Option 1");
+    cb.set_scale(4);
+    cb.on_checked = function(event)
     {
         console.log("Option 1 checked");
     };
-    cb1.on_unchecked = function(event)
+    cb.on_unchecked = function(event)
     {
         console.log("Option 1 un-checked");
     }
-    this.scene.add(cb1);
+    this.scene.add(cb);
 
-    cb2 = new allteria.checkbox("Longer label on this checkbox");
-    cb2.set_scale(4);
-    cb2.on_checked = function(event)
+    var cb;
+    
+    cb = new allteria.checkbox("Longer label on this checkbox");
+    cb.set_scale(4);
+    cb.on_checked = function(event)
     {
         console.log("Longer label checked");
     };
-    cb2.on_unchecked = function(event)
+    cb.on_unchecked = function(event)
     {
         console.log("Longer label un-checked");
     }
-    cb2.translateY(-30);
-    this.scene.add(cb2);
+    cb.translateY(-30);
+    this.scene.add(cb);
+
+    cb = new allteria.checkbox("Editable label");
+    cb.set_scale(4);
+    cb.on_checked = function(event)
+    {
+        console.log("Editable label checked");
+    };
+    cb.on_unchecked = function(event)
+    {
+        console.log("Editable label un-checked");
+    }
+    cb.translateY(-60);
+    cb.set_editable(true);
+    this.scene.add(cb);
 }
 
 allteria.world.prototype.render = function render()

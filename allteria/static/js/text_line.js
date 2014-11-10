@@ -46,6 +46,12 @@ allteria.text_line = function text_line(text, scale)
 
 allteria.extend(allteria.text_line, allteria.ui_component);
 
+allteria.text_line.prototype.set_scale = function set_scale(s)
+{
+    this.scale.x = s;
+    this.scale.y = s;
+}
+
 allteria.text_line.prototype.get_height = function get_height()
 {
     return this.height * this.scale.x;

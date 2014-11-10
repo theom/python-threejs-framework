@@ -7,10 +7,15 @@ allteria.checkbox = function checkbox(label)
 
     this.width = 4;
     this.height = 4;
-    this.checked = true;
+    this.set_scale(4);
+    this.checked = false;
 
     var geo;
     var mat;
+    
+    this.label = new allteria.text_line(label, this.scale.x / 3.5);
+    this.label.translateX(-(this.label.get_width() + this.width));
+    this.add(this.label);
     
     var x = this.width / 2;
     var y = this.width / 2;
@@ -59,14 +64,6 @@ allteria.checkbox = function checkbox(label)
     this.background = new three.Mesh(geo, mat);
     this.background.comp = this;
     this.add(this.background);
-
-    this.label = new allteria.text_line(label);
-    var s = 0.8;
-    this.label.scale.set(s, s, s);
-    this.label.translateX(-(this.label.get_width() + this.width));
-    this.add(this.label);
-    
-    this.set_scale(4);
 }
 
 allteria.extend(allteria.checkbox, allteria.ui_component);
@@ -85,7 +82,6 @@ allteria.checkbox.prototype.set_scale = function set_scale(s)
 {
     this.scale.x = s;
     this.scale.y = s;
-    this.scale.z = s;
 }
 
 allteria.checkbox.prototype.get_scale = function get_scale()
@@ -115,4 +111,9 @@ allteria.checkbox.prototype.on_checked = function on_checked(event)
 
 allteria.checkbox.prototype.on_unchecked = function on_unchecked(event)
 {
+}
+
+allteria.checkbox.prototype.set_editable = function set_editable(editable)
+{
+    this.label.set_editable(editable);
 }

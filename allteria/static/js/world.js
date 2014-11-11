@@ -8,7 +8,7 @@ allteria.world = function world()
 
 allteria.world.prototype.start = function start()
 {
-    this.perspective = true;
+    this.perspective = false;
     this.fps = 20;
     this.ms_per_frame = 1000 / this.fps;
     this.create_renderer();

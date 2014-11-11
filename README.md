@@ -3,7 +3,7 @@ allteria
 
 ## A 3D Web Framework
 
-Allteria is a 3D web framework based on three.js, websockets, tornado and zodb. It provides all the components you need to build a pure 3D web application, including 3D UI widgets, message passing between components regardless of location, a stable web server ([Tornado](http://www.tornadoweb.org/)) and an object oriented database ([ZODB](http://www.zodb.org/)).
+Allteria is a 3D web framework based on [three.js](https://github.com/mrdoob/three.js), [WebSockets](http://dev.w3.org/html5/websockets/), [Tornado](http://www.tornadoweb.org/) and [ZODB](http://www.zodb.org/). It provides all the components you need to build a pure 3D web application, including 3D UI widgets, message passing between components regardless of location, a stable web server (Tornado) and an object oriented database (ZODB).
 
 ### Features
 

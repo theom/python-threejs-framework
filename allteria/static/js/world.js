@@ -576,9 +576,45 @@ allteria.world.prototype.create_world = function create_scene()
         console.log("Editable label un-checked");
     }
     cb.translateY(-60);
-    cb.rotateY(Math.PI/3);
     cb.set_editable(true);
     this.scene.add(cb);
+
+    rb1 = new allteria.radio_button("Radio button 1");
+    rb1.set_scale(3);
+    rb1.on_checked = function(event)
+    {
+        console.log("Radio button 1 checked");
+    };
+    rb1.on_unchecked = function(event)
+    {
+        console.log("Radio button 1 un-checked");
+    }
+    rb1.translateY(-120);
+    this.scene.add(rb1);
+
+    rb2 = new allteria.radio_button("Radio button 2");
+    rb2.set_scale(3);
+    rb2.on_checked = function(event)
+    {
+        console.log("Radio button 2 checked");
+    };
+    rb2.on_unchecked = function(event)
+    {
+        console.log("Radio button 2 un-checked");
+    }
+    rb2.translateY(-90);
+    this.scene.add(rb2);
+
+    b = new allteria.button("Reset radio buttons");
+    b.on_click = function(event)
+    {
+        rb1.uncheck();
+        rb2.uncheck();
+    }
+    b.translateX(-100);
+    b.translateY(-160);
+    this.scene.add(b);
+    
 }
 
 allteria.world.prototype.render = function render()

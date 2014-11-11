@@ -11,9 +11,8 @@ The following features have been implemented:
 
 #### Front-end
 
-UI widgets:
+Three.js based UI widgets:
 
-* Three.js based.
 * Simple line font (including the Icelandic letters).
 * Editable text line.
 * Text paragraph.
@@ -26,11 +25,12 @@ Server communications:
 
 #### Back-end
 
-* Implemented in Python 3.
+The back-end is implemented in Python 3:
+
 * Uses the Tornado web server.
 * Very basic handling of socket messages.
 * ZODB (ZEO) database connection from the web server.
-* ZODB run as a separate process and accessed using ZEO.
+* ZODB runs as a separate process and accessed using ZEO.
 
 ### Examples
 

@@ -23,6 +23,7 @@ allteria.radio_button = function radio_button(label)
     geo = new three.CircleGeometry(this.bullet_radius, segments);
     mat = new three.MeshBasicMaterial({color: 0x000000});
     this.bullet = new three.Mesh(geo, mat);
+    this.bullet.comp = this;
     this.bullet.visible = this.checked;
     this.add(this.bullet);
 
@@ -61,7 +62,13 @@ allteria.radio_button.prototype.get_scale = function get_scale()
     return this.scale.x;
 }
 
+// This method gets overridden by the group
 allteria.radio_button.prototype.on_mouse_down = function on_mouse_down(event)
+{
+    this.check(event);
+}
+
+allteria.radio_button.prototype.check = function check(event)
 {
     if (!this.checked)
     {
@@ -71,7 +78,6 @@ allteria.radio_button.prototype.on_mouse_down = function on_mouse_down(event)
     }
 }
 
-// Called by the radio button group this button belongs to
 allteria.radio_button.prototype.uncheck = function uncheck(event)
 {
     if (this.checked)

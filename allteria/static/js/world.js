@@ -344,7 +344,7 @@ allteria.world.prototype.create_world = function create_scene()
 {
     var letter;
 
-    var pos = new three.Vector3(-940, 100, 0);
+    var pos = new three.Vector3(-940, 70, 0);
 
     this.add_letter("A", pos);
     this.add_letter("Á", pos);
@@ -461,6 +461,8 @@ allteria.world.prototype.create_world = function create_scene()
     this.add_letter("`", pos);
     this.add_letter(")", pos);
 
+    // Text lines
+    
     var line_pos = 400;
     var s;
 
@@ -487,6 +489,16 @@ allteria.world.prototype.create_world = function create_scene()
     s.translateY(line_pos);
     this.scene.add(s);
 
+    // Editable text line
+    
+    s = new allteria.text_line("This text is editable. 0123456789", 3);
+    s.set_editable(true);
+    s.translateX(-940);
+    s.translateY(250);
+    this.scene.add(s);
+
+    // Paragraph
+    
     var t = "";
     t += "This is a longer text that is shown in a paragraph and should be broken up into smaller lines. ";
     t += "This seems to be working correctly. ";
@@ -496,12 +508,10 @@ allteria.world.prototype.create_world = function create_scene()
     p.translateY(-200);
     this.scene.add(p);
 
-    s = new allteria.text_line("This text is editable. 0123456789", 3);
-    s.set_editable(true);
-    s.translateX(-940);
-    s.translateY(250);
-    this.scene.add(s);
-
+    // Buttons
+    
+    var b;
+    
     b = new allteria.button("Click here 1");
     b.on_click = function(event)
     {
@@ -538,6 +548,8 @@ allteria.world.prototype.create_world = function create_scene()
     b.translateY(50);
     this.scene.add(b);
 
+    // Checkboxes
+    
     cb = new allteria.checkbox("Option 1");
     cb.set_scale(4);
     cb.on_checked = function(event)
@@ -579,7 +591,9 @@ allteria.world.prototype.create_world = function create_scene()
     cb.set_editable(true);
     this.scene.add(cb);
 
-    rb1 = new allteria.radio_button("Radio button 1");
+    // Individual radio buttons
+    
+    var rb1 = new allteria.radio_button("Radio button 1");
     rb1.set_scale(3);
     rb1.on_checked = function(event)
     {
@@ -592,7 +606,7 @@ allteria.world.prototype.create_world = function create_scene()
     rb1.translateY(-120);
     this.scene.add(rb1);
 
-    rb2 = new allteria.radio_button("Radio button 2");
+    var rb2 = new allteria.radio_button("Radio button 2");
     rb2.set_scale(3);
     rb2.on_checked = function(event)
     {
@@ -614,7 +628,53 @@ allteria.world.prototype.create_world = function create_scene()
     b.translateX(-100);
     b.translateY(-160);
     this.scene.add(b);
+
+    // Radio buttons in a group
     
+    var rg = new allteria.radio_button_group();
+    rg.translateY(200);
+    
+    var rb;
+
+    rb = new allteria.radio_button("Radio button 1 in group");
+    rb.set_scale(2);
+    rb.on_checked = function(event)
+    {
+        console.log("Radio button 1 in group checked");
+    };
+    rb.on_unchecked = function(event)
+    {
+        console.log("Radio button 1 in group un-checked");
+    }
+    rg.add(rb);
+    
+    rb = new allteria.radio_button("Radio button 2 in group");
+    rb.set_scale(2);
+    rb.on_checked = function(event)
+    {
+        console.log("Radio button 2 in group checked");
+    };
+    rb.on_unchecked = function(event)
+    {
+        console.log("Radio button 2 in group un-checked");
+    }
+    rb.translateY(-30);
+    rg.add(rb);
+
+    rb = new allteria.radio_button("Radio button 3 in group");
+    rb.set_scale(2);
+    rb.on_checked = function(event)
+    {
+        console.log("Radio button 3 in group checked");
+    };
+    rb.on_unchecked = function(event)
+    {
+        console.log("Radio button 3 in group un-checked");
+    }
+    rb.translateY(-60);
+    rg.add(rb);
+
+    this.scene.add(rg);
 }
 
 allteria.world.prototype.render = function render()

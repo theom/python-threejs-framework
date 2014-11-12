@@ -1,0 +1,55 @@
+
+# -*- mode: sh -*-
+
+# Exit on errors
+set -e
+
+# Check if python exists
+python -c ""
+
+# Check if python is of the correct version
+if python -c 'import sys; sys.exit(0 if sys.hexversion < 0x3040000 else 1)'; then
+    echo "Your version of python is too old. Allteria needs at least python 3.4"
+    exit
+fi
+
+install_dir=$PWD/$(dirname $0)
+
+echo ""
+
+# Install ZEO
+if [ ! -d $install_dir/../zodb ]; then
+    echo "Installing ZODB and ZEO into " $install_dir/../zodb
+    cd $install_dir
+    cd ..
+    virtualenv zodb
+    cd zodb
+    . ./bin/activate
+    pip install ZEO
+    mkdir db
+    cp ../install/start-zeo start
+else
+    echo "ZODB already installed."
+fi
+
+# Install Tornado
+if [ ! -d $install_dir/../tornado ]; then
+    echo "Installing Tornado into " $install_dir/../tornado
+    cd $install_dir
+    cd ..
+    virtualenv tornado
+    cd tornado
+    . ./bin/activate
+    pip install tornado
+    pip install ZEO
+    cp ../install/start-tornado start
+else
+    echo "Tornado already installed."
+fi
+
+echo ""
+echo "Now do the following:"
+echo "1. Start the database server by running 'zodb/start' in its own shell."
+echo "2. Start the web server by running 'tornado/start' in its own shell."
+echo "3. Point your browser to 'localhost:8000'"
+echo ""

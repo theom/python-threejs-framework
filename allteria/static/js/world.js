@@ -682,6 +682,29 @@ allteria.world.prototype.create_world = function create_scene()
     rg.add(rb);
 
     this.scene.add(rg);
+
+    // Frame
+
+    var f;
+
+    f = new allteria.frame();
+    f.translateY(200);
+    f.translateX(150);
+
+    var t = new allteria.text_line("A text line within a frame.");
+    t.translateX(-360);
+    f.add(t);
+
+    var b = new allteria.button("Button");
+    b.translateY(-190);
+    b.translateX(320);
+    f.add(b);
+
+    var c = new allteria.checkbox("A checkbox within a frame");
+    c.translateY(-80);
+    f.add(c);
+
+    this.scene.add(f);
 }
 
 allteria.world.prototype.render = function render()

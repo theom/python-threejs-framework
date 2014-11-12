@@ -36,6 +36,7 @@ allteria.radio_button = function radio_button(label)
     geo = new three.CircleGeometry(this.outer_radius, segments);
     mat = new three.MeshBasicMaterial({color: 0x000000});
     this.border = new three.Mesh(geo, mat);
+    this.border.bomp = this;
     this.add(this.border);
 }
 

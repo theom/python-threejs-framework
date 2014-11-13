@@ -18,7 +18,7 @@ allteria.world.prototype.start = function start()
     this.init_window_resize();
     this.init_picking();
     this.init_keyboard();
-    //this.connect_to_server()
+    this.connect_to_server()
     this.create_world();
     this.render();
 }

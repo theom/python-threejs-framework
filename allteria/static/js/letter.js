@@ -20,10 +20,10 @@ allteria.letter = function letter(character)
 
     this.add(obj.clone());
 
-    var g = new three.PlaneGeometry(this.half_width * 3.5, this.height);
+    var g = new three.PlaneGeometry(this.half_width * 4.7, this.height);
     var m = new three.MeshBasicMaterial();
     var p = new three.Mesh(g, m);
-    p.translateZ(-0.1)
+    p.visible = false;
     this.add(p);
 
     g = new three.Geometry();

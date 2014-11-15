@@ -519,7 +519,7 @@ allteria.world.prototype.create_world = function create_scene()
     b.on_click = function(event)
     {
         console.log("You clicked on button 1");
-    }
+    };
     b.translateX(-860);
     b.translateY(200);
     this.scene.add(b);
@@ -528,7 +528,7 @@ allteria.world.prototype.create_world = function create_scene()
     b.on_click = function(event)
     {
         console.log("You clicked on button 2");
-    }
+    };
     b.translateX(-860);
     b.translateY(150);
     this.scene.add(b);
@@ -537,7 +537,7 @@ allteria.world.prototype.create_world = function create_scene()
     b.on_click = function(event)
     {
         console.log("You clicked on button 3");
-    }
+    };
     b.translateX(-860);
     b.translateY(100);
     this.scene.add(b);
@@ -546,7 +546,7 @@ allteria.world.prototype.create_world = function create_scene()
     b.on_click = function(event)
     {
         console.log("You clicked on button 4");
-    }
+    };
     b.translateX(-860);
     b.translateY(50);
     this.scene.add(b);
@@ -562,7 +562,7 @@ allteria.world.prototype.create_world = function create_scene()
     cb.on_unchecked = function(event)
     {
         console.log("Option 1 un-checked");
-    }
+    };
     cb.translateX(-300);
     cb.translateY(200);
     this.scene.add(cb);
@@ -578,7 +578,7 @@ allteria.world.prototype.create_world = function create_scene()
     cb.on_unchecked = function(event)
     {
         console.log("Longer label un-checked");
-    }
+    };
     cb.translateX(-300);
     cb.translateY(170);
     this.scene.add(cb);
@@ -592,7 +592,7 @@ allteria.world.prototype.create_world = function create_scene()
     cb.on_unchecked = function(event)
     {
         console.log("Editable label un-checked");
-    }
+    };
     cb.translateX(-300);
     cb.translateY(140);
     cb.set_editable(true);
@@ -609,7 +609,7 @@ allteria.world.prototype.create_world = function create_scene()
     rb1.on_unchecked = function(event)
     {
         console.log("Radio button 1 un-checked");
-    }
+    };
     rb1.translateX(-300);
     rb1.translateY(100);
     this.scene.add(rb1);
@@ -623,7 +623,7 @@ allteria.world.prototype.create_world = function create_scene()
     rb2.on_unchecked = function(event)
     {
         console.log("Radio button 2 un-checked");
-    }
+    };
     rb2.translateX(-300);
     rb2.translateY(70);
     this.scene.add(rb2);
@@ -633,7 +633,7 @@ allteria.world.prototype.create_world = function create_scene()
     {
         rb1.uncheck();
         rb2.uncheck();
-    }
+    };
     b.translateX(-400);
     b.translateY(30);
     this.scene.add(b);
@@ -655,7 +655,7 @@ allteria.world.prototype.create_world = function create_scene()
     rb.on_unchecked = function(event)
     {
         console.log("Radio button 1 in group un-checked");
-    }
+    };
     rg.add(rb);
     
     rb = new allteria.radio_button("Radio button 2 in group");
@@ -667,7 +667,7 @@ allteria.world.prototype.create_world = function create_scene()
     rb.on_unchecked = function(event)
     {
         console.log("Radio button 2 in group un-checked");
-    }
+    };
     rb.translateY(-30);
     rg.add(rb);
 
@@ -680,7 +680,7 @@ allteria.world.prototype.create_world = function create_scene()
     rb.on_unchecked = function(event)
     {
         console.log("Radio button 3 in group un-checked");
-    }
+    };
     rb.translateY(-60);
     rg.add(rb);
 
@@ -721,7 +721,7 @@ allteria.world.prototype.create_world = function create_scene()
     {
         f.show(vis);
         vis = !vis;
-    }
+    };
     this.scene.add(b);
 
     // Zoom button
@@ -734,12 +734,16 @@ allteria.world.prototype.create_world = function create_scene()
     {
         self.camera.translateZ(dir * 500);
         dir = -dir;
-    }
+    };
     this.scene.add(b);
 
     // Display an image received from the server
     this.image = new allteria.image(200);
     this.image.translateY(-200);
+    this.image.on_click = function(event)
+    {
+        console.log("Image clicked");
+    };
     this.scene.add(this.image);
 }
 

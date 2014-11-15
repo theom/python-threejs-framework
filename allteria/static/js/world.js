@@ -11,7 +11,9 @@ allteria.world.prototype.start = function start()
     this.perspective = true;
     this.fps = 20;
     this.stack = [];
+    this.left_mouse_down = false;
     this.ms_per_frame = 1000 / this.fps;
+    
     this.create_renderer();
     this.create_scene();
     this.create_camera();
@@ -107,6 +109,7 @@ allteria.world.prototype.init_picking = function init_picking()
     var self = this;
     window.addEventListener("mousemove", function(event) { self.on_mouse_move(event); }, false);
     window.addEventListener("mousedown", function(event) { self.on_mouse_down(event); }, false);
+    window.addEventListener("mouseup",   function(event) { self.on_mouse_up(event); }, false);
 }
 
 allteria.world.prototype.init_keyboard = function init_keyboard()
@@ -272,11 +275,26 @@ allteria.world.prototype.on_mouse_move = function on_mouse_move(event)
             }
         }
         this.picked_component = undefined;
+
+        // Check if the scene is being dragged
+        if (this.left_mouse_down)
+        {
+            var dx = this.mouse_x - event.clientX;
+            var dy = this.mouse_y - event.clientY;
+            this.camera.translateX(dx);
+            this.camera.translateY(-dy)
+            this.mouse_x = event.clientX;
+            this.mouse_y = event.clientY;
+        }
     }
 }
 
 allteria.world.prototype.on_mouse_down = function on_mouse_down(event)
 {
+    this.left_mouse_down = true;
+    this.mouse_x = event.clientX;
+    this.mouse_y = event.clientY;
+    
     if (this.picked_component !== undefined)
     {
         if (this.picked_component.on_mouse_down)
@@ -285,6 +303,11 @@ allteria.world.prototype.on_mouse_down = function on_mouse_down(event)
             this.picked_component.on_mouse_down.call(this.picked_component, event);
         }
     }
+}
+
+allteria.world.prototype.on_mouse_up = function on_mouse_up(event)
+{
+    this.left_mouse_down = false;
 }
 
 allteria.world.prototype.on_key_press = function on_key_press(event)
@@ -745,6 +768,18 @@ allteria.world.prototype.create_world = function create_scene()
         console.log("Image clicked");
     };
     this.scene.add(this.image);
+
+    // File upload
+    var fu = new allteria.file_upload("Upload image");
+    var self = this;
+    fu.on_load = function(event)
+    {
+        // This is a bit crude but works
+        self.socket.send(event.target.result + " image");
+    }
+    fu.translateY(-120);
+    fu.translateX(200);
+    this.scene.add(fu);
 }
 
 // Temporary image test method. Called by the message parser.

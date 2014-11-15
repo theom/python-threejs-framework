@@ -13,7 +13,7 @@ allteria.frame = function frame()
     var geo = new three.PlaneGeometry(0, 0);
     var mat = new three.MeshBasicMaterial({color: 0xeeeeee});
     this.background = new three.Mesh(geo, mat);
-    this.background.translateZ(-0.3);
+    this.background.translateZ(-1);
     this.background.translateY(-this.height/2);
     allteria.ui_component.prototype.add.call(this, this.background);
 }

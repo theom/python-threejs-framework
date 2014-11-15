@@ -8,9 +8,11 @@ allteria.text_line = function text_line(text, scale)
     this.editable = false;
     this.acute = false;
 
+    // The line geometries need more work - They are too arbitrary as is
+    
     this.scale.x = scale || 2;
     this.scale.y = scale || 2;
-    this.height = 10;  // This is kind of arbitrary
+    this.height = 10;
     this.letter_spacing = 1.0 * this.scale.x;
 
     this.letters = [];
@@ -18,13 +20,16 @@ allteria.text_line = function text_line(text, scale)
     
     this.set_text(text);
 
+    var geo;
+    var mat;
+
     // Cursor
-    var m = new three.LineBasicMaterial({color: 0x0000ff, linewidth: 1.5});
-    var g = new three.Geometry();
-    g.vertices.push(new three.Vector3(0, -2.2 * this.scale.x, 0));
-    g.vertices.push(new three.Vector3(0,  2.2 * this.scale.x, 0));
-    this.cursor = new three.Line(g, m);
-    this.cursor.translateZ(1);
+    geo = new three.Geometry();
+    geo.vertices.push(new three.Vector3(0, -2.2 * this.scale.x, 0));
+    geo.vertices.push(new three.Vector3(0,  2.2 * this.scale.x, 0));
+    mat = new three.LineBasicMaterial({color: 0x0000ff, linewidth: 1.5});
+    this.cursor = new three.Line(geo, mat);
+    this.cursor.translateZ(0.5);
     this.cursor.visible = false;
     this.add(this.cursor);
 
@@ -221,6 +226,18 @@ allteria.text_line.prototype.on_key_up = function on_key_up(event)
     {
         case 222: this.acute = true; break;
     }
+}
+
+allteria.text_line.prototype.get_bounding_box = function get_bounding_box()
+{
+    var b_box_min = new three.Vector3(0, 0, 0);
+    var w = this.get_width();
+    var h = this.get_height();
+    var b_box_max = new three.Vector3(w, h, 0);
+
+    var b_box = new three.Box3(b_box_min, b_box_max);
+
+    return b_box;
 }
 
 // private

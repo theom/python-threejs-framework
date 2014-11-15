@@ -117,3 +117,13 @@ allteria.checkbox.prototype.set_editable = function set_editable(editable)
 {
     this.label.set_editable(editable);
 }
+
+allteria.checkbox.prototype.get_bounding_box = function get_bounding_box()
+{
+    var b_box_min = new three.Vector3(-(this.label.get_width() + this.width), 0, 0);
+    var b_box_max = new three.Vector3(0, Math.max(this.label.get_height(), this.height), 0);
+
+    var b_box = new three.Box3(b_box_min, b_box_max);
+
+    return b_box;
+}

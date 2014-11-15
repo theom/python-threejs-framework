@@ -8,7 +8,7 @@ allteria.world = function world()
 
 allteria.world.prototype.start = function start()
 {
-    this.perspective = false;
+    this.perspective = true;
     this.fps = 20;
     this.ms_per_frame = 1000 / this.fps;
     this.create_renderer();
@@ -63,7 +63,7 @@ allteria.world.prototype.create_camera = function create_camera()
     {
         var near_plane = 0.1;
         this.camera = new three.PerspectiveCamera(view_angle, aspect_ratio, near_plane, far_plane);
-        this.camera.position.z = 350;
+        this.camera.position.z = 700;
     }
     else
     {
@@ -695,16 +695,30 @@ allteria.world.prototype.create_world = function create_scene()
     t.translateX(-360);
     f.add(t);
 
-    var b = new allteria.button("Button");
-    b.translateY(-190);
-    b.translateX(320);
-    f.add(b);
+    // var b = new allteria.button("Button");
+    // b.translateY(-190);
+    // b.translateX(320);
+    // f.add(b);
 
     var c = new allteria.checkbox("A checkbox within a frame");
+    c.translateX(100);
     c.translateY(-80);
     f.add(c);
 
+    f.resize();
+
     this.scene.add(f);
+
+    // Zoom button
+    b = new allteria.button("Zoom in/out");
+    var dir = 1;
+    var self = this;
+    b.on_click = function(event)
+    {
+        self.camera.translateZ(dir * 500);
+        dir = -dir;
+    }
+    this.scene.add(b);
 }
 
 allteria.world.prototype.render = function render()

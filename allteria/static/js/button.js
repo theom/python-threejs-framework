@@ -49,3 +49,10 @@ allteria.button.prototype.on_mouse_leave = function on_mouse_enter(event)
 {
     document.body.style.cursor = "default";
 }
+
+allteria.button.prototype.get_bounding_box = function get_bounding_box()
+{
+    this.background.geometry.computeBoundingBox();
+    return this.background.geometry.boundingBox.clone();
+}
+    

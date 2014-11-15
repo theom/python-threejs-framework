@@ -695,11 +695,11 @@ allteria.world.prototype.create_world = function create_scene()
     t.translateX(-360);
     f.add(t);
 
-    // var b = new allteria.button("Button");
-    // b.translateY(-190);
-    // b.translateX(320);
-    // f.add(b);
-
+    var b = new allteria.button("Button");
+    b.translateY(-190);
+    b.translateX(320);
+    f.add(b);
+    
     var c = new allteria.checkbox("A checkbox within a frame");
     c.translateX(100);
     c.translateY(-80);
@@ -709,8 +709,22 @@ allteria.world.prototype.create_world = function create_scene()
 
     this.scene.add(f);
 
+    // Toggle the frame's visibility
+    b = new allteria.button("Show/hide frame");
+    b.translateY(270);
+    b.translateX(-130);
+    var vis = false;
+    b.on_click = function(event)
+    {
+        f.show(vis);
+        vis = !vis;
+    }
+    this.scene.add(b);
+
     // Zoom button
     b = new allteria.button("Zoom in/out");
+    b.translateY(-30);
+    b.translateX(-400);
     var dir = 1;
     var self = this;
     b.on_click = function(event)

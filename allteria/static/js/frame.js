@@ -83,7 +83,7 @@ allteria.frame.prototype.resize = function resize()
         {
             max_y = Math.max(max_y, b_box.max.y + pos.y);
         }
-}
+    }
     
     min_x -= this.border;
     min_y -= this.border;
@@ -103,4 +103,9 @@ allteria.frame.prototype.resize = function resize()
     this.background.geometry.vertices[3].y = min_y;
     
     this.background.verticesNeedUpdate = true;
+}
+
+allteria.frame.prototype.show = function show(visible)
+{
+    this.visible = visible;
 }

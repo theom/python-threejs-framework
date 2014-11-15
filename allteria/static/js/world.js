@@ -10,6 +10,7 @@ allteria.world.prototype.start = function start()
 {
     this.perspective = true;
     this.fps = 20;
+    this.stack = [];
     this.ms_per_frame = 1000 / this.fps;
     this.create_renderer();
     this.create_scene();
@@ -143,7 +144,7 @@ allteria.world.prototype.on_socket_open = function on_socket_open()
 
 allteria.world.prototype.on_socket_message = function on_socket_message(event)
 {
-    console.log("socket message: '" + event.data + "'");
+    //console.log("socket message: '" + event.data + "'");
     this.parse_message(event.data);
 }
 
@@ -166,6 +167,8 @@ allteria.world.prototype.parse_message = function parse_message(msg)
         switch (word)
         {
             case "identify": this.identify(); break;
+            case "image":    this.display_image(this.stack.pop()); break;
+            default:         this.stack.push(word);
         }
     }
 }
@@ -733,6 +736,17 @@ allteria.world.prototype.create_world = function create_scene()
         dir = -dir;
     }
     this.scene.add(b);
+
+    // Display an image received from the server
+    this.image = new allteria.image(200);
+    this.image.translateY(-200);
+    this.scene.add(this.image);
+}
+
+// Temporary image test method. Called by the message parser.
+allteria.world.prototype.display_image = function display_image(img_base64)
+{
+    this.image.set_image(img_base64);
 }
 
 allteria.world.prototype.render = function render()
@@ -754,7 +768,10 @@ allteria.world.prototype.update = function update_scene()
     for (var i = 0; i < this.components.length; i++)
     {
         var comp = this.components[i];
-        comp.render.call(comp);
+        if (comp.render)
+        {
+            comp.render.call(comp);
+        }
     }
 
     tween.update();

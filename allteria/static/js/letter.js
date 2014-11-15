@@ -6,7 +6,7 @@ allteria.letter = function letter(character)
     allteria.ui_component.call(this);
 
     this.character = character;
-    this.material = new three.LineBasicMaterial({ color: 0x000000 });
+    this.material = new three.LineBasicMaterial({ color: 0x000000, linewidth: 0.7 });
     var obj = allteria.letters[character];
     this.half_width = obj.userData.half_width;
     this.base = obj.userData.base;

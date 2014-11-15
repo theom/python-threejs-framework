@@ -6,6 +6,7 @@ allteria.letters = {};
 var obj;
 var geo;
 
+// This is actually set in the letter prototype so go there if you want to change the appearance
 var mat = new three.LineBasicMaterial();
 
 // A

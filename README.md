@@ -18,6 +18,12 @@ Three.js based UI widgets:
 * Text paragraph.
 * Button with a text label.
 * Checkbox with an editable text label.
+* Radio buttons.
+* Image loaded using a message from the server (not through an URL).
+* File upload.
+* Frame that can contain other widgets.
+* An HUD.
+* Edge navigator that stays hidden at the screen edges until hovered over.
 
 Server communications:
 
@@ -29,11 +35,20 @@ The back-end is implemented in Python 3:
 
 * Uses the Tornado web server.
 * Very basic handling of socket messages.
+* Example image delivery to the client using a message.
 * ZODB (ZEO) database connection from the web server.
 * ZODB runs as a separate process and accessed using ZEO.
+
+### Installation
+
+To install the server just run the file 'install' in the install directory. This will download and install Tornado and ZODB in their separate virtual env directories. The script will tell you where the directories were installed.
+
+To start the database server cd into the new 'zodb' directory and run './start' from there.
+To start the web server start a new shell, cd into the new 'tornado' directory and run './start' from there. You should see in the database shell a connection message when the web server connects to the database.
+Then go to 'localhost:8000' in your browser and try out the examples.
 
 ### Examples
 
 For client-side examples look at the create_world method in allteria/static/js/world.js. There you can find several examples of how to use the UI widgets.
+For the server-side, look at the websocket_handler.py file.
 
-You don't need the server up and running to get the examples working - just open the file allteria/static/index.html in your browser.

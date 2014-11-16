@@ -44,7 +44,9 @@ The back-end is implemented in Python 3:
 To install the server just run the file 'install' in the install directory. This will download and install Tornado and ZODB in their separate virtual env directories. The script will tell you where the directories were installed.
 
 To start the database server cd into the new 'zodb' directory and run './start' from there.
+
 To start the web server start a new shell, cd into the new 'tornado' directory and run './start' from there. You should see in the database shell a connection message when the web server connects to the database.
+
 Then go to 'localhost:8000' in your browser and try out the examples.
 
 ### Examples

@@ -16,7 +16,9 @@ allteria.world.prototype.start = function start()
     
     this.create_renderer();
     this.create_scene();
+    this.create_hud_scene();
     this.create_camera();
+    this.create_hud_camera();
     this.create_lights();
     this.init_window_resize();
     this.init_picking();
@@ -45,12 +47,18 @@ allteria.world.prototype.create_renderer = function create_renderer()
     this.canvas = document.getElementById("canvas1");
     this.renderer.setSize(this.canvas.clientWidth, this.canvas.clientHeight);
     this.renderer.setClearColor(0xffffff, 1.0);
+    this.renderer.autoClear = false;
     this.canvas.appendChild(this.renderer.domElement);
 }
 
 allteria.world.prototype.create_scene = function create_scene()
 {
     this.scene = new three.Scene();
+}
+
+allteria.world.prototype.create_hud_scene = function create_hud_scene()
+{
+    this.hud_scene = new three.Scene();
 }
 
 allteria.world.prototype.create_camera = function create_camera()
@@ -76,6 +84,20 @@ allteria.world.prototype.create_camera = function create_camera()
     }
     this.camera.lookAt(this.scene.position);
     this.scene.add(this.camera);
+}
+
+allteria.world.prototype.create_hud_camera = function create_hud_camera()
+{
+    var w = this.canvas.clientWidth;
+    var h = this.canvas.clientHeight;
+    var far_plane = 2000;
+    var near_plane = -100;
+
+    this.hud_camera = new three.OrthographicCamera(-w/2, w/2, h/2, -h/2, near_plane, far_plane);
+    this.hud_camera.position.z = 200;
+
+    this.hud_camera.lookAt(this.hud_scene.position);
+    this.hud_scene.add(this.hud_camera);
 }
 
 allteria.world.prototype.create_lights = function create_lights()
@@ -780,6 +802,11 @@ allteria.world.prototype.create_world = function create_scene()
     fu.translateY(-120);
     fu.translateX(200);
     this.scene.add(fu);
+
+    // HUD
+    t = new allteria.text_line("HUD text");
+    t.translateX(-1050);
+    this.hud_scene.add(t);
 }
 
 // Temporary image test method. Called by the message parser.
@@ -799,7 +826,9 @@ allteria.world.prototype.render = function render()
                                          });
                }, this.ms_per_frame);
     this.update();
+    this.renderer.clear();
     this.renderer.render(this.scene, this.camera);
+    this.renderer.render(this.hud_scene, this.hud_camera);    
 }
 
 allteria.world.prototype.update = function update_scene()

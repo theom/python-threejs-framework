@@ -1,6 +1,7 @@
 
-allteria.tests = function tests(scene, hud_scene)
+allteria.tests = function tests(world, scene, hud_scene)
 {
+    this.world = world;
     this.scene = scene;
     this.hud_scene = hud_scene;
 }
@@ -425,7 +426,25 @@ allteria.tests.prototype.test_zoom = function test_zoom(camera)
 
 allteria.tests.prototype.test_hud = function test_hud()
 {
-    var t = new allteria.text_line("HUD text");
-    t.translateX(-1050);
-    this.hud_scene.add(t);
+    this.hud_text = new allteria.text_line("Allteria HUD");
+    this.world.register_event_listener("window_resize", this, this.hud_resize);
+    this.position_hud_text();
+    this.hud_scene.add(this.hud_text);
+}
+
+allteria.tests.prototype.hud_resize = function hud_resize(event)
+{
+    this.position_hud_text();
+}
+
+allteria.tests.prototype.position_hud_text = function position_hud_text()
+{
+    this.hud_text.position.x = -this.world.renderer.domElement.clientWidth/2 + 10;
+    this.hud_text.position.y = this.world.renderer.domElement.clientHeight/2 - this.hud_text.get_height();
+}
+
+allteria.tests.prototype.test_edge_navigator = function test_edge_navigator(camera)
+{
+    var n = new allteria.edge_navigator(this.world, camera);
+    this.hud_scene.add(n);
 }

@@ -1,9 +1,11 @@
 
 // @author theom / https://www.axonehf.com
 
-allteria.ui_component = function ui_component()
+allteria.ui_component = function ui_component(world)
 {
     three.Object3D.call(this);
+
+    this.world = world;
 }
 
 allteria.extend(allteria.ui_component, three.Object3D);

@@ -22,5 +22,4 @@ allteria.extend = function(child, parent)
 }
 
 three = THREE;
-threex = THREEx;
 tween = TWEEN;

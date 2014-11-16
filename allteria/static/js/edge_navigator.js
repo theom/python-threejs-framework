@@ -71,7 +71,7 @@ allteria.edge_navigator = function edge_navigator(world, camera)
     this.bottom.direction = "bottom";
     this.add(this.bottom);
     this.down_arrow = arrow.clone();
-    this.down_arrow.rotateZ(Math.PI/2);
+    this.down_arrow.rotateZ(Math.PI*3/2);
     this.add(this.down_arrow);
     this.show_bottom(false);
 

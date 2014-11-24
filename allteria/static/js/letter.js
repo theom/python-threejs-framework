@@ -1,6 +1,7 @@
 
-// @author theom / https://www.axonehf.com
+// @author theom, https://www.axonehf.com
 
+// @constructor
 allteria.letter = function letter(character)
 {
     allteria.ui_component.call(this);
@@ -40,16 +41,19 @@ allteria.letter = function letter(character)
 
 allteria.extend(allteria.letter, allteria.ui_component);
 
+// @public
 allteria.letter.prototype.set_position = function set_position(pos)
 {
     this.position.set(pos.x, pos.y, pos.z);
 }
 
+// @public
 allteria.letter.prototype.get_position = function get_position()
 {
     return this.position;
 }
 
+// @public
 allteria.letter.prototype.set_scale = function set_scale(s)
 {
     this.scale.x = s;
@@ -59,17 +63,22 @@ allteria.letter.prototype.set_scale = function set_scale(s)
     this.base *= s;
 }
 
+// @public
 allteria.letter.prototype.get_half_width = function get_half_width()
 {
     return this.half_width;
 }
 
+// @public
 allteria.letter.prototype.get_scale = function get_scale()
 {
     return this.scale.x;
 }
 
+// @public
 allteria.letter.prototype.frame = function frame(visible)
 {
     this.frame_lines.visible = visible;
 }
+
+//# sourceURL=letter.js

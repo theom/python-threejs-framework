@@ -41,6 +41,10 @@ The back-end is implemented in Python 3:
 
 ### Installation
 
+#### Requirements
+
+#### Procedure
+
 To install the server just run the file 'install' in the install directory. This will download and install Tornado and ZODB in their separate virtual env directories. The script will tell you where the directories were installed.
 
 To start the database server cd into the new 'zodb' directory and run './start' from there.

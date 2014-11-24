@@ -3,18 +3,22 @@
 
 allteria.world = function world()
 {
+    this.name = "allteria";
+    
+    this.perspective = true;
+    this.fps = 20;
+    this.left_mouse_down = false;
+    this.ms_per_frame = 1000 / this.fps;
+    this.name_set = false;
+
+    this.entities = {};
     this.components = [];
+    this.stack = [];
+    this.scene_sets = [];
 }
 
 allteria.world.prototype.start = function start()
 {
-    this.perspective = true;
-    this.fps = 20;
-    this.stack = [];
-    this.left_mouse_down = false;
-    this.ms_per_frame = 1000 / this.fps;
-    this.scene_sets = [];
-
     this.init_listeners();
     this.create_renderer();
     this.create_scene(0);  // scene
@@ -25,9 +29,10 @@ allteria.world.prototype.start = function start()
     this.init_window_resize();
     this.init_picking();
     this.init_keyboard();
-    this.connect_to_server()
-    this.create_world();
-    this.render();
+
+    this.start_entities()
+    
+    this.connect_to_server();
 }
 
 allteria.world.prototype.init_listeners = function init_listeners()
@@ -179,12 +184,17 @@ allteria.world.prototype.connect_to_server = function connect_to_server()
 allteria.world.prototype.on_socket_open = function on_socket_open()
 {
     console.log("socket connected");
+    var msg = {};
+    msg.to = "local.loaders.components.trigger";
+    msg.payload = "load";
+    this.send(msg);
 }
 
 allteria.world.prototype.on_socket_message = function on_socket_message(event)
 {
-    //console.log("socket message: '" + event.data + "'");
-    this.parse_message(event.data);
+    console.log("socket message received: '" + event.data + "'");
+    var msg = this.parse_message(event.data);
+    this.send(msg);
 }
 
 allteria.world.prototype.on_socket_close = function on_socket_close()
@@ -195,26 +205,6 @@ allteria.world.prototype.on_socket_close = function on_socket_close()
 allteria.world.prototype.on_socket_error = function on_socket_error(error)
 {
     console.log("socket error: '" + error + "'");
-}
-
-allteria.world.prototype.parse_message = function parse_message(msg)
-{
-    var words = msg.split(" ");
-    for (var i = 0; i < words.length; i++)
-    {
-        var word = words[i];
-        switch (word)
-        {
-            case "identify": this.identify(); break;
-            case "image":    this.display_image(this.stack.pop()); break;
-            default:         this.stack.push(word);
-        }
-    }
-}
-
-allteria.world.prototype.send = function send(msg)
-{
-    this.socket.send(msg);
 }
 
 allteria.world.prototype.register_event_listener = function register_event_listener(event, object, handler)
@@ -442,7 +432,12 @@ allteria.world.prototype.on_key_up = function on_key_up(event)
 }
    
 
-allteria.world.prototype.register = function register(comp)
+allteria.world.prototype.register_entity = function register_entity(ent)
+{
+    this.entities[ent.name] = ent;
+}
+
+allteria.world.prototype.register_component = function register_component(comp)
 {
     this.components.push(comp);
 }
@@ -469,7 +464,11 @@ allteria.world.prototype.create_world = function create_scene()
     var self = this;
     fu.on_load = function(event)
     {
-        self.send(event.target.result + " image");
+        var msg = {};
+        msg.to = "allteria.images";
+        msg.from = this.name;
+        msg.payload = event.target.result + " image";
+        self.send_to_server(msg);
     }
     fu.translateY(-120);
     fu.translateX(200);
@@ -521,7 +520,148 @@ allteria.world.prototype.update = function update_scene()
     tween.update();
 }
 
-allteria.world.prototype.identify = function identify()
+allteria.world.prototype.set_name = function set_name(name)
 {
-    this.send("My name is allteria");
+    if (this.name_set)
+    {
+        return;
+    }
+    
+    this.name = this.name + "." + name;
+    this.name_set = true;
+    
+    var msg = {};
+    msg.to = "allteria.registry";
+    msg.from = this.name;
+    msg.payload = this.name + " confirmed";
+    this.send_to_server(msg);
+}
+
+allteria.world.prototype.start_entities = function start_entities()
+{
+    this.construct_components_loader();
+
+    this.runner = window.setInterval(this.deliver_messages.bind(this), 300);
+}
+
+allteria.world.prototype.deliver_messages = function deliver_messages()
+{
+    for (var name in this.entities)
+    {
+        if (this.entities.hasOwnProperty(name))
+        {
+            var entity = this.entities[name];
+            if (entity.output_queue.length > 0)
+            {
+                var msg = entity.output_queue.pop();
+                this.send(msg);
+            }
+        }
+    }
+}
+
+allteria.world.prototype.parse_message = function parse_message(msg)
+{
+    var new_msg = {};
+    var done = false;
+    var words = msg.split(" ");
+    var i;
+    for (i = 0; i < words.length; i++)
+    {
+        var word = words[i];
+        console.log("world word: " + word);
+        switch (word)
+        {
+            case "identity" : this.set_name(this.stack.pop()); break;
+            case "to"       : new_msg.to = this.stack.pop();
+            case "from"     : new_msg.from = this.stack.pop();
+            case "payload"  : done = true;
+            default         : this.stack.push(word);
+        }
+        if (done)
+        {
+            break;
+        }
+    }
+    new_msg.payload = msg.substr(i);
+    
+    return new_msg;
+}
+
+allteria.world.prototype.send = function send(msg)
+{
+    entity = this.entities[msg.to];
+    if (entity)
+    {
+        entity.input_queue.push(msg);
+        entity.run();  // I might not want to do this every time, based on some priority
+    }
+    else
+    {
+        this.send_to_server(msg);
+    }
+}
+
+allteria.world.prototype.send_to_server = function send_to_server(msg)
+{
+    var str = msg.to + " to " + msg.from + " from " + msg.payload;
+    console.log("world sending to server: '" + str + "'");
+    this.socket.send(str);
+}
+
+allteria.world.prototype.construct_components_loader = function construct_components_loader()
+{
+    // All loaders get a message when the socket connects
+    //
+    //                                     +-->loader--+
+    //                                    /             \
+    //  message--->one_shot--->distributor---->loader---->synchronizer--->caller
+    //                                    \             /
+    //                                     +-->loader--+
+    //
+
+    var domain ="local.loaders.components.";
+    
+    var one_shot = new allteria.one_shot(this, domain + "trigger");
+    one_shot.connect_receiver(domain + "dist");
+    this.register_entity(one_shot);
+    
+    var dist = new allteria.distributor(this, domain + "dist");
+    this.register_entity(dist);
+
+    var sync_name = domain + "sync";
+    var sync = new allteria.synchronizer(this, sync_name);
+
+    var code = ["letter", "letters", "text_line", "paragraph", "button", "checkbox", "radio_button", "radio_button_group", "frame",
+                "image", "file_upload", "edge_navigator", "tests"];
+
+    for (var i = 0; i < code.length; i++)
+    {
+        var loader_name = domain + "loader" + i;
+        dist.connect_receiver(loader_name);
+        this.create_loader(loader_name, sync_name, code[i]);
+        sync.connect_sender(loader_name);  // The synchronizer needs inputs to sync on
+    }
+    
+    var caller_name = domain + "done";
+    sync.connect_receiver(caller_name);
+    this.register_entity(sync);
+    
+    var caller = new allteria.caller(this, caller_name);
+    caller.set_method(this, this.post_load);
+    this.register_entity(caller);
+}
+
+allteria.world.prototype.create_loader = function create_loader(name, sync, code)
+{
+    var ldr = new allteria.code_loader(this, name);
+    ldr.load(code);
+    ldr.connect_receiver(sync);
+    this.register_entity(ldr);
+}
+
+allteria.world.prototype.post_load = function post_load()
+{
+    this.create_world();
+    this.render();
 }

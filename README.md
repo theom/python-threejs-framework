@@ -1,9 +1,9 @@
-allteria
+alheimr
 ===========
 
 ## A 3D Web Framework
 
-Allteria is a 3D web framework based on [three.js](https://github.com/mrdoob/three.js), [WebSockets](http://dev.w3.org/html5/websockets/), [Tornado](http://www.tornadoweb.org/) and [ZODB](http://www.zodb.org/). It provides all the components you need to build a pure 3D web application, including 3D UI widgets, message passing between components regardless of location, a stable web server (Tornado) and an object oriented database (ZODB).
+Alheimr is a 3D web framework based on [three.js](https://github.com/mrdoob/three.js), [WebSockets](http://dev.w3.org/html5/websockets/), [Tornado](http://www.tornadoweb.org/) and [ZODB](http://www.zodb.org/). It provides all the components you need to build a pure 3D web application, including 3D UI widgets, message passing between components regardless of location, a stable web server (Tornado) and an object oriented database (ZODB).
 
 ### Features
 
@@ -55,6 +55,6 @@ Then go to 'localhost:8000' in your browser and try out the examples.
 
 ### Examples
 
-For client-side examples look at the create_world method in allteria/static/js/world.js. There you can find several examples of how to use the UI widgets.
+For client-side examples look at the create_world method in alheimr/static/js/world.js. There you can find several examples of how to use the UI widgets.
 For the server-side, look at the websocket_handler.py file.
 

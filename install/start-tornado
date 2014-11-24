@@ -1,4 +1,4 @@
 . bin/activate
-root=/home/jens/allteria/allteria.p
+root=/home/jens/alheimr/alheimr.p
 export PYTHONPATH=..
-python ../allteria/server.py
+python ../alheimr/server.py

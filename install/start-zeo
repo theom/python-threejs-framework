@@ -1,2 +1,2 @@
 . ./bin/activate
-runzeo -a `hostname`:9100 -f db/allteria.fs
+runzeo -a `hostname`:9100 -f db/alheimr.fs

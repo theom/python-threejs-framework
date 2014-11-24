@@ -9,7 +9,7 @@ python -c ""
 
 # Check if python is of the correct version
 if python -c 'import sys; sys.exit(0 if sys.hexversion < 0x3040000 else 1)'; then
-    echo "Your version of python is too old. Allteria needs at least python 3.4"
+    echo "Your version of python is too old. Alheimr needs at least python 3.4"
     exit
 fi
 

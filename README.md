@@ -25,18 +25,20 @@ Three.js based UI widgets:
 * An HUD.
 * Edge navigator that stays hidden at the screen edges until hovered over.
 
-Server communications:
+Communication:
 
 * WebSocket with an auto reconnect feature.
+* Message based component communication.
+* Dynamic code loading using messages.
 
 #### Back-end
 
 The back-end is implemented in Python 3:
 
 * Uses the Tornado web server.
-* Very basic handling of socket messages.
-* Example image delivery to the client using a message.
-* ZODB (ZEO) database connection from the web server.
+* WebSocket based messages.
+* Hierarchical name based and location agnostic message routing.
+* Objects persisted using ZODB.
 * ZODB runs as a separate process and accessed using ZEO.
 
 ### Installation

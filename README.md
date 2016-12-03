@@ -1,4 +1,4 @@
-alheimr
+Python ThreeJS Framework
 ===========
 
 ## A 3D Web Framework
